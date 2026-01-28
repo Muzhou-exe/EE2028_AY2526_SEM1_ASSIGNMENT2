@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sotong Game Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      text-align: center;
+      margin-top: 80px;
+    }
+    input {
+      margin: 10px;
+      padding: 10px;
+      width: 250px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    #log {
+      margin-top: 30px;
+      padding: 10px;
+      background: #222;
+      color: #0f0;
+      font-family: monospace;
+      width: 80%;
+      height: 200px;
+      overflow-y: auto;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Sotong Game Login</h1>
+  <input id="username" type="text" placeholder="Username"><br>
+  <input id="password" type="password" placeholder="Password"><br>
+
+  <button onclick="register()">Register</button>
+  <button onclick="login()">Login</button>
+  <button onclick="gameOver()">Game Over</button>
+
+  <div id="log"></div>
+
+  <script>
+    function appendLog(msg) {
+      const box = document.getElementById("log");
+      box.innerHTML += msg + "<br>";
+      box.scrollTop = box.scrollHeight;
+    }
+
+    async function sendCmd(cmd) {
+      appendLog("[SENT] " + cmd);
+      const res = await fetch("/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "cmd=" + encodeURIComponent(cmd)
+      });
+      const data = await res.json();
+      appendLog("[RECV] " + data.response);
+    }
+
+    function register() {
+      const u = document.getElementById("username").value;
+      const p = document.getElementById("password").value;
+      sendCmd("REGISTER " + u + " " + p);
+    }
+
+    function login() {
+      const u = document.getElementById("username").value;
+      const p = document.getElementById("password").value;
+      sendCmd("LOGIN " + u + " " + p);
+    }
+
+    function gameOver() {
+      sendCmd("GAME_OVER");
+    }
+  </script>
+</body>
+</html>
