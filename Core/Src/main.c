@@ -423,7 +423,6 @@ int main(void)
     SystemClock_Config();
 
     MX_GPIO_Init();
-    // ❌ 不要在这里调用 MX_SPI3_Init(); 交给 WIFI_Init 内部完成 SPI3 初始化
     MX_I2C1_Init();
     MX_USART1_UART_Init();
 
@@ -607,6 +606,7 @@ void Error_Handler(void)
         HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_14);
     }
 }
+
 
 
 
