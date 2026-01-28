@@ -10,3 +10,5 @@ An embedded system developed on an STM32 development board, integrating multiple
 - WiFi communication between embedded device and host system
 - Python-based server for data handling and communication
 - Application-level software for system interaction and data processing
+## License
+This project is licensed under the MIT License.
